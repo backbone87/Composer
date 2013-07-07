@@ -1,0 +1,94 @@
+@CHARSET "UTF-8";
+
+.ccc_install h2 {
+	padding-top: 0.8em;
+	border-top: 1px solid #ddd;
+	color: #8ab858;
+	font-size: 14px;
+}
+.ccc_install p,
+.ccc_install li {
+	line-height: 1.5em;
+}
+.ccc_install_check ul {
+	list-style-type: none;
+	padding-left: 0;
+}
+.ccc_install_check h3 {
+	color: #8ab858;
+	background: url(../images/pass.png) left center no-repeat;
+	padding-left: 16px;
+}
+.ccc_install_check h2.fail,
+.ccc_install_check .fail h3 {
+	color: #990000;
+}
+.ccc_install_check .fail h3 {
+	background-image: url(../images/fail.png);
+}
+.ccc_install_check h2.warn,
+.ccc_install_check .warn h3 {
+	color: #999900;
+}
+.ccc_install_check .warn h3 {
+	background-image: url(../images/warn.png);
+}
+
+.ccc_install .questions {
+	margin-bottom: 2em;
+}
+.ccc_install .mode_upgrade {
+	border-color: #006400;
+}
+.ccc_install .mode_upgrade strong {
+	color: #006400;
+}
+.ccc_install .mode_upgrade.checked {
+	background-color: #CDFFCD;
+}
+.ccc_install .mode_clean {
+	border-color: #FFB269;
+}
+.ccc_install .mode_clean strong {
+	color: #FFB269;
+}
+.ccc_install .mode_clean.checked {
+	background-color: #FFE6CD;
+}
+.ccc_install .mode_none {
+	border-color: #990000;
+}
+.ccc_install .mode_none strong {
+	color: #990000;
+}
+.ccc_install .mode_none.checked {
+	background-color: #FFCDCD;
+}
+
+.ccc_install .setup_production_compat {
+	border-color: #645300;
+}
+.ccc_install .setup_production_compat strong {
+	color: #645300;
+}
+.ccc_install .setup_production_compat.checked {
+	background-color: #FFF7CD;
+}
+.ccc_install .setup_production_extended {
+	border-color: #006400;
+}
+.ccc_install .setup_production_extended strong {
+	color: #006400;
+}
+.ccc_install .setup_production_extended.checked {
+	background-color: #CDFFCD;
+}
+.ccc_install .setup_development {
+	border-color: #002878;
+}
+.ccc_install .setup_development strong {
+	color: #002878;
+}
+.ccc_install .setup_development.checked {
+	background-color: #CDDEFF;
+}

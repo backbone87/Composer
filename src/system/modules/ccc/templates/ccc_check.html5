@@ -1,0 +1,124 @@
+<?php $this->loadLanguageFile('ccc_check'); ?>
+<div id="tl_buttons"></div>
+
+<h2 class="sub_headline"><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_headline']; ?></h2>
+
+<?php echo $this->getMessages(); ?>
+
+<?php if($this->action): ?>
+<form action="<?php echo $this->action; ?>" method="post" enctype="application/x-www-form-urlencoded"
+    class="tl_form ccc_check ccc_check">
+<input type="hidden" name="REQUEST_TOKEN" value="<?php echo REQUEST_TOKEN; ?>" />
+<input type="hidden" name="FORM_SUBMIT" value="ccc_check_check" />
+<?php endif; ?>
+
+<div class="tl_formbody_edit">
+
+<ul>
+
+<li<?php if(!$this->contao): ?> class="fail"<?php endif; ?>>
+  <h3><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_contao']; ?></h3>
+  <?php if(!$this->contao): ?><p><?php echo sprintf(
+	$GLOBALS['TL_LANG']['ccc_check']['check_contaoExplain'],
+	$this->contaoVersion
+); ?></p><?php endif; ?>
+</li>
+
+<li<?php if(!$this->php): ?> class="fail"<?php endif; ?>>
+  <h3><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_php']; ?></h3>
+  <?php if(!$this->php): ?><p><?php echo sprintf(
+	$GLOBALS['TL_LANG']['ccc_check']['check_phpExplain'],
+	$this->phpVersion
+); ?></p><?php endif; ?>
+</li>
+
+<li<?php if(!$this->smh): ?> class="fail"<?php endif; ?>>
+  <h3><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_smh'], ' ', $this->smh
+	? $GLOBALS['TL_LANG']['ccc_check']['check_disabled']
+	: $GLOBALS['TL_LANG']['ccc_check']['check_enabled'];
+?></h3>
+  <?php if(!$this->smh): ?><p><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_smhExplain']; ?></p><?php endif; ?>
+</li>
+
+<li<?php if(!$this->fopen): ?> class="fail"<?php endif; ?>>
+  <h3><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_fopen'], ' ', $this->fopen
+	? $GLOBALS['TL_LANG']['ccc_check']['check_enabled']
+	: $GLOBALS['TL_LANG']['ccc_check']['check_disabled'];
+?></h3>
+  <?php if(!$this->fopen): ?><p><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_fopenExplain']; ?></p><?php endif; ?>
+</li>
+
+<li<?php if(!$this->phar): ?> class="fail"<?php endif; ?>>
+  <h3><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_phar'], ' ', $this->phar
+	? $GLOBALS['TL_LANG']['ccc_check']['check_enabled']
+	: $GLOBALS['TL_LANG']['ccc_check']['check_disabled'];
+?></h3>
+  <?php if(!$this->phar): ?><p><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_pharExplain']; ?></p><?php endif; ?>
+</li>
+
+<li<?php if(!$this->apc && !$this->apcCanDisable): ?> class="warn"<?php endif; ?>>
+<?php if($this->apc): ?>
+  <h3><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_apcDisabled']; ?></h3>
+<?php elseif($this->apcCanDisable): ?>
+  <h3><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_apcCanDisable']; ?></h3>
+  <p><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_apcCanDisableExplain']; ?></p>
+  <p><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_apcHelp']; ?></p>
+<?php else: ?>
+  <h3><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_apcEnabled']; ?></h3>
+  <p><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_apcEnabledExplain']; ?></p>
+  <p><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_apcHelp']; ?></p>
+<?php if($this->action): ?>
+  <p>
+    <input type="checkbox" id="ccc_check_check_apc" value="1" />
+    <label for="ccc_check_check_apc"><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_confirm']; ?></label>
+  </p>
+<?php endif; ?>
+<?php endif; ?>
+</li>
+
+<?php if($this->commercial): ?>
+<li class="warn">
+  <h3><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_commercial']; ?></h3>
+  <p><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_commercialExplain']; ?></p>
+  <ul>
+  <?php foreach($this->commercial as $extension): ?>
+  <li><?php echo $extension; ?></li>
+  <?php endforeach; ?>
+  </ul>
+  <p><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_commercialHelp']; ?></p>
+<?php if($this->action): ?>
+  <p>
+    <input type="checkbox" id="ccc_check_check_commercial" value="1" />
+    <label for="ccc_check_check_commercial"><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_confirm']; ?></label>
+  </p>
+<?php endif; ?>
+</li>
+<?php endif; ?>
+
+</ul>
+
+<?php if(!$this->composer): ?>
+<h2 class="fail"><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_result']; ?></h2>
+<p><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_fail']; ?></p>
+<?php elseif($this->warn): ?>
+<h2 class="warn"><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_result']; ?></h2>
+<p><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_warn']; ?></p>
+<?php else: ?>
+<h2><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_result']; ?></h2>
+<p><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_pass']; ?></p>
+<?php endif; ?>
+
+</div>
+
+<?php if($this->action): ?>
+<div class="tl_formbody_submit">
+  <div class="tl_submit_container">
+    <input type="submit" name="do" accesskey="s"
+        value="<?php echo $GLOBALS['TL_LANG']['ccc_check']['check_next']; ?>"
+        <?php if(!$this->composer): ?>disabled="disabled"<?php endif; ?>
+        class="tl_submit" />
+  </div>
+</div>
+
+</form>
+<?php endif; ?>
