@@ -10,30 +10,6 @@
 .ccc_install li {
 	line-height: 1.5em;
 }
-.ccc_install_check ul {
-	list-style-type: none;
-	padding-left: 0;
-}
-.ccc_install_check h3 {
-	color: #8ab858;
-	background: url(../images/pass.png) left center no-repeat;
-	padding-left: 16px;
-}
-.ccc_install_check h2.fail,
-.ccc_install_check .fail h3 {
-	color: #990000;
-}
-.ccc_install_check .fail h3 {
-	background-image: url(../images/fail.png);
-}
-.ccc_install_check h2.warn,
-.ccc_install_check .warn h3 {
-	color: #999900;
-}
-.ccc_install_check .warn h3 {
-	background-image: url(../images/warn.png);
-}
-
 .ccc_install .questions {
 	margin-bottom: 2em;
 }

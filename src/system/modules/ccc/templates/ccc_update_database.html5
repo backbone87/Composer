@@ -1,0 +1,27 @@
+<div id="tl_buttons"><a href="contao/main.php?do=ccc" class="header_back"
+    title="<?php echo specialchars($GLOBALS['TL_LANG']['MSC']['backBT']); ?>"
+><?php echo $GLOBALS['TL_LANG']['MSC']['backBT']; ?></a></div>
+
+<h2 class="sub_headline"><?php echo $GLOBALS['TL_LANG']['ccc_update_database']['headline']; ?></h2>
+
+<?php echo $this->getMessages(); ?>
+
+<form action="<?php echo $this->action; ?>" method="post" enctype="application/x-www-form-urlencoded"
+    class="tl_form ccc_update_database">
+<input type="hidden" name="REQUEST_TOKEN" value="<?php echo REQUEST_TOKEN; ?>">
+<input type="hidden" name="FORM_SUBMIT" value="<?php echo $this->formSubmit; ?>" />
+
+<div class="tl_formbody_edit">
+  <div class="tl_tbox">
+    <?php echo $this->form; ?>
+  </div>
+</div>
+
+<div class="tl_formbody_submit">
+  <div class="tl_submit_container">
+    <input type="submit" name="save" accesskey="s" class="tl_submit"
+        value="<?php echo $GLOBALS['TL_LANG']['ccc_update_database']['update']; ?>">
+  </div>
+</div>
+
+</form>

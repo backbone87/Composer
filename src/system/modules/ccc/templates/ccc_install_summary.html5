@@ -1,0 +1,44 @@
+<?php
+$GLOBALS['TL_CSS'][] = 'system/modules/ccc/assets/css/install.css';
+?>
+<div id="tl_buttons"></div>
+
+<h2 class="sub_headline"><?php echo $GLOBALS['TL_LANG']['ccc_install']['summary_headline']; ?></h2>
+
+<?php echo $this->getMessages(); ?>
+
+<form action="<?php echo $this->action; ?>" method="post" enctype="application/x-www-form-urlencoded"
+    class="tl_form ccc_install">
+<input type="hidden" name="REQUEST_TOKEN" value="<?php echo REQUEST_TOKEN; ?>" />
+<input type="hidden" name="FORM_SUBMIT" value="<?php echo $this->formSubmit; ?>" />
+
+<div class="tl_formbody_edit">
+
+<?php if($this->extensions): ?>
+<p><?php echo $GLOBALS['TL_LANG']['ccc_install']['summary_er2Composer']; ?></p>
+<ul>
+<?php foreach($this->extensions as $extension): ?>
+<li><em><?php echo $extension; ?></em></li>
+<?php endforeach; ?>
+</ul>
+<?php endif; ?>
+
+<p><?php echo $GLOBALS['TL_LANG']['ccc_install']['summary_settings']; ?></p>
+<ul>
+<?php foreach($this->settings as $name => $value): ?>
+<li><strong><?php echo $GLOBALS['TL_LANG']['ccc_settings'][$name]['label']; ?></strong>:
+  <em><?php echo $GLOBALS['TL_LANG']['ccc_settings'][$name][$value]; ?></em></li>
+<?php endforeach; ?>
+</ul>
+
+</div>
+
+<div class="tl_formbody_submit">
+  <div class="tl_submit_container">
+    <input type="submit" name="do" accesskey="s"
+        value="<?php echo $GLOBALS['TL_LANG']['ccc_install']['summary_install']; ?>"
+        class="tl_submit" />
+  </div>
+</div>
+
+</form>

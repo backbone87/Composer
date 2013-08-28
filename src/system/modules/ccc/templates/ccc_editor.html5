@@ -1,0 +1,59 @@
+<?php
+// $GLOBALS['TL_CSS'][] = 'system/modules/ccc/assets/css/editor.css';
+?>
+<div id="tl_buttons"></div>
+
+<h2 class="sub_headline"><?php echo $GLOBALS['TL_LANG']['ccc_editor']['headline']; ?></h2>
+
+<?php echo $this->getMessages(); ?>
+
+<form action="<?php echo $this->action; ?>" method="post" enctype="application/x-www-form-urlencoded"
+    class="tl_form ccc_editor">
+<input type="hidden" name="REQUEST_TOKEN" value="<?php echo REQUEST_TOKEN; ?>" />
+<input type="hidden" name="FORM_SUBMIT" value="<?php echo $this->formSubmit; ?>" />
+<input type="hidden" name="ctrl_json" value="" />
+
+<div class="tl_formbody_edit">
+
+<div id="ccc_editor_wrapper"><div id="ccc_editor"><?php echo $this->json; ?></div></div>
+<script src="//d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" charset="utf-8"></script>
+<script>
+window.addEvent("domready", function() {
+	var input, wrapper, editor, updateConfig, updateHeight;
+
+	input = document.getElements("#ctrl_json");
+	wrapper = document.getElements("#ccc_editor_wrapper");
+
+	editor = ace.edit("ccc_editor");
+	editor.getSession().setMode("ace/mode/json");
+	editor.getSession().setTabSize(4);
+	editor.getSession().setUseSoftTabs(true);
+
+	(updateConfig = function() {
+		input.setAttribute("value", editor.getValue());
+	})();
+	editor.getSession().on("change", updateConfig);
+
+	/** @see http://stackoverflow.com/a/13579233 */
+	(updateHeight = function() {
+		// http://stackoverflow.com/questions/11584061/
+		var newHeight = editor.getSession().getScreenLength() * editor.renderer.lineHeight + editor.renderer.scrollBar.getWidth();
+		wrapper.setStyle("height", newHeight.toString() + "px");
+		editor.resize();
+	})();
+	editor.getSession().on("change", updateHeight);
+
+});
+</script>
+
+</div>
+
+<div class="tl_formbody_submit">
+  <div class="tl_submit_container">
+    <input type="submit" name="do" accesskey="s"
+        value="<?php echo $GLOBALS['TL_LANG']['ccc_editor']['save']; ?>"
+        class="tl_submit" />
+  </div>
+</div>
+
+</form>

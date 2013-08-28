@@ -1,115 +1,106 @@
 <?php
 
 /**
+ * PHP Version 5.2
  *
  * @author Oliver Hoff <oliver@hofff.com>
  */
-class CCCCheck
-{
+class CCCCheck {
 
-	public static function isIniSetAvailable() {
+	public static function create(CCCContext $ctx) {
+		return new self($ctx);
+	}
+
+	private $ctx;
+
+	protected function __construct(CCCContext $ctx) {
+		$this->ctx = $ctx;
+	}
+
+	public function getContext() {
+		return $this->ctx;
+	}
+
+	public function isIniSetAvailable() {
 		return !in_array('ini_set', explode(',', ini_get('disable_functions')));
 	}
 
-	public static function isSafeModeHackDisabled() {
+	public function isSafeModeHackDisabled() {
 		return !$GLOBALS['TL_CONFIG']['useFTP'];
 	}
 
-	public static function isURLFopenAllowed() {
+	public function isURLFopenAllowed() {
 		return (bool) ini_get('allow_url_fopen');
 	}
 
-	public static function isPharSupported() {
+	const TEST_PHAR_PATH = 'system/modules/ccc/config/test.phar';
+
+	public function isPharSupported() {
 		try {
-			if (class_exists('Phar', false)) {
-				new Phar(TL_ROOT . '/system/modules/ccc/config/test.phar');
+			if(class_exists('Phar', false)) {
+				new Phar(TL_ROOT . '/' . self::TEST_PHAR_PATH);
 				return true;
 			}
-		}
-		catch (Exception $e) {
+		} catch(Exception $e) {
 		}
 		return false;
 	}
 
-	public static function isAPCDisabled() {
-		return !ini_get('apc.enabled') || !ini_get('apc.cache_by_default');
+	public function isAPCDisabled() {
+		return !extension_loaded('apc') || !ini_get('apc.enabled') || !ini_get('apc.cache_by_default');
 	}
 
-	public static function canDisableAPCCacheByDefault() {
-		$previous = ini_get('apc.cache_by_default');
-		$can = ini_set('apc.cache_by_default', 0);
-		ini_set('apc.cache_by_default', $previous);
-		return $can;
+	const APC_MIN_VERSION_RUNTIME_CACHE_BY_DEFAULT = '3.0.13';
+
+	public function canDisableAPCCacheByDefault() {
+		if(!extension_loaded('apc')) {
+			return false;
+		}
+		$apc = new ReflectionExtension('apc');
+		if(version_compare($apc->getVersion(), self::APC_MIN_VERSION_RUNTIME_CACHE_BY_DEFAULT, '<')) {
+			return false;
+		}
+		return $this->isIniSetAvailable();
 	}
 
-	public static function isGitAvailable() {
-		return self::testProc('git --version');
+	public function isGitAvailable() {
+		return CCCUtil::testProc('git --version');
 	}
 
-	public static function isHGAvailable() {
-		return self::testProc('hg --version');
+	public function isHGAvailable() {
+		return CCCUtil::testProc('hg --version');
 	}
 
-	public static function isSVNAvailable() {
-		return self::testProc('svn --version');
+	public function isSVNAvailable() {
+		return CCCUtil::testProc('svn --version');
 	}
 
-	public static function testProc($cmd) {
-		$proc = proc_open(
-			$cmd,
-			array(
-				array('pipe', 'r'),
-				array('pipe', 'w'),
-				array('pipe', 'w')
-			),
-			$pipes
-		);
-		return is_resource($proc) && !proc_close($proc);
-	}
-
-	const PHP_MIN_VERSION = '5.3.4';
-
-	public static function getPHPVersion() {
+	public function getPHPVersion() {
 		return PHP_VERSION;
 	}
 
-	public static function isCompatiblePHPVersion() {
-		return version_compare(self::getPHPVersion(), self::PHP_MIN_VERSION, '>=');
+	public function isCompatiblePHPVersion() {
+		return version_compare($this->getPHPVersion(), $this->getContext()->getPHPMinVersion(), '>=');
 	}
 
-	const CONTAO_MIN_VERSION = '2.11.11';
-
-	public static function getContaoVersion() {
+	public function getContaoVersion() {
 		return VERSION . '.' . BUILD;
 	}
 
-	public static function isCompatibleContaoVersion() {
-		return version_compare(self::getContaoVersion(), self::CONTAO_MIN_VERSION, '>=');
+	public function isCompatibleContaoVersion() {
+		return version_compare($this->getContaoVersion(), $this->getContext()->getContaoMinVersion(), '>=');
 	}
 
-	public function __construct() {
+	public function hasErrors() {
+		return !$this->isCompatibleContaoVersion()
+			|| !$this->isCompatiblePHPVersion()
+			|| !$this->isSafeModeHackDisabled()
+			|| !$this->isURLFopenAllowed()
+			|| !$this->isPharSupported();
 	}
 
-	public function generate($action = null, array $commercial = null) {
-		$tpl = new BackendTemplate('ccc_check');
-
-		$tpl->action		= $action;
-
-		$tpl->contao		= self::isCompatibleContaoVersion();
-		$tpl->contaoVersion	= self::getContaoVersion();
-		$tpl->php			= self::isCompatiblePHPVersion();
-		$tpl->phpVersion	= self::getPHPVersion();
-		$tpl->smh			= self::isSafeModeHackDisabled();
-		$tpl->fopen			= self::isURLFopenAllowed();
-		$tpl->phar			= self::isPharSupported();
-		$tpl->apc			= self::isAPCDisabled();
-		$tpl->apcCanDisable	= self::canDisableAPCCacheByDefault();
-		$tpl->commercial	= $commercial;
-
-		$tpl->composer		= $tpl->contao && $tpl->php && $tpl->smh && $tpl->fopen && $tpl->phar;
-		$tpl->warn			= !$tpl->apc || $commercial;
-
-		return $tpl->parse();
+	public function hasWarnings() {
+		return !$this->isAPCDisabled() && !$this->canDisableAPCCacheByDefault();
 	}
 
 }

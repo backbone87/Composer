@@ -1,4 +1,7 @@
-<?php $this->loadLanguageFile('ccc_check'); ?>
+<?php
+$GLOBALS['TL_CSS'][] = 'system/modules/ccc/assets/css/check.css';
+$GLOBALS['TL_JAVASCRIPT']['ccc_check'] = 'system/modules/ccc/assets/js/check.js';
+?>
 <div id="tl_buttons"></div>
 
 <h2 class="sub_headline"><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_headline']; ?></h2>
@@ -7,9 +10,9 @@
 
 <?php if($this->action): ?>
 <form action="<?php echo $this->action; ?>" method="post" enctype="application/x-www-form-urlencoded"
-    class="tl_form ccc_check ccc_check">
+    class="tl_form ccc_check" id="ccc_check">
 <input type="hidden" name="REQUEST_TOKEN" value="<?php echo REQUEST_TOKEN; ?>" />
-<input type="hidden" name="FORM_SUBMIT" value="ccc_check_check" />
+<input type="hidden" name="FORM_SUBMIT" value="<?php echo $this->formSubmit; ?>" />
 <?php endif; ?>
 
 <div class="tl_formbody_edit">
@@ -69,7 +72,7 @@
   <p><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_apcHelp']; ?></p>
 <?php if($this->action): ?>
   <p>
-    <input type="checkbox" id="ccc_check_check_apc" value="1" />
+    <input type="checkbox" id="ccc_check_check_apc" class="ccc_check_confirm" value="1" />
     <label for="ccc_check_check_apc"><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_confirm']; ?></label>
   </p>
 <?php endif; ?>
@@ -88,7 +91,7 @@
   <p><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_commercialHelp']; ?></p>
 <?php if($this->action): ?>
   <p>
-    <input type="checkbox" id="ccc_check_check_commercial" value="1" />
+    <input type="checkbox" id="ccc_check_check_commercial" class="ccc_check_confirm" value="1" />
     <label for="ccc_check_check_commercial"><?php echo $GLOBALS['TL_LANG']['ccc_check']['check_confirm']; ?></label>
   </p>
 <?php endif; ?>
@@ -115,7 +118,7 @@
   <div class="tl_submit_container">
     <input type="submit" name="do" accesskey="s"
         value="<?php echo $GLOBALS['TL_LANG']['ccc_check']['check_next']; ?>"
-        <?php if(!$this->composer): ?>disabled="disabled"<?php endif; ?>
+        disabled="disabled"
         class="tl_submit" />
   </div>
 </div>

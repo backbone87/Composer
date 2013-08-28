@@ -1,0 +1,44 @@
+<?php
+$GLOBALS['TL_CSS'][] = 'system/modules/ccc/assets/css/install.css';
+?>
+<div id="tl_buttons"></div>
+
+<h2 class="sub_headline"><?php echo $GLOBALS['TL_LANG']['ccc_install']['welcome_headline']; ?></h2>
+
+<?php echo $this->getMessages(); ?>
+
+<form action="<?php echo $this->action; ?>" method="post" enctype="application/x-www-form-urlencoded"
+    class="tl_form ccc_install">
+<input type="hidden" name="REQUEST_TOKEN" value="<?php echo REQUEST_TOKEN; ?>" />
+<input type="hidden" name="FORM_SUBMIT" value="<?php echo $this->formSubmit; ?>" />
+
+<div class="tl_formbody_edit">
+
+<p><?php echo $GLOBALS['TL_LANG']['ccc_install']['welcome_intro']; ?></p>
+<p><em><?php echo $GLOBALS['TL_LANG']['ccc_install']['welcome_beta']; ?></em></p>
+
+<h2><?php echo $GLOBALS['TL_LANG']['ccc_install']['welcome_faq']; ?></h2>
+<p><?php echo $GLOBALS['TL_LANG']['ccc_install']['welcome_faq_intro']; ?></p>
+<ul class="questions">
+<?php foreach($GLOBALS['TL_LANG']['ccc_install']['welcome_faq_questions'] as $question): ?>
+<li>
+  <h3><?php echo $question[0]; ?></h3>
+  <p><?php echo $question[1]; ?></p>
+</li>
+<?php endforeach; ?>
+</ul>
+
+<h2><?php echo $GLOBALS['TL_LANG']['ccc_install']['welcome_install']; ?></h2>
+<p><?php echo $GLOBALS['TL_LANG']['ccc_install']['welcome_install_intro']; ?></p>
+
+</div>
+
+<div class="tl_formbody_submit">
+  <div class="tl_submit_container">
+    <input type="submit" name="do" accesskey="s"
+        value="<?php echo $GLOBALS['TL_LANG']['ccc_install']['welcome_next']; ?>"
+        class="tl_submit" />
+  </div>
+</div>
+
+</form>

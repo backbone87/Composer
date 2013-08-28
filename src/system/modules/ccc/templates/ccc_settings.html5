@@ -1,0 +1,40 @@
+<?php
+// $GLOBALS['TL_CSS'][] = 'system/modules/ccc/assets/css/settings.css';
+?>
+<div id="tl_buttons"></div>
+
+<h2 class="sub_headline"><?php echo $GLOBALS['TL_LANG']['ccc_settings']['headline']; ?></h2>
+
+<?php echo $this->getMessages(); ?>
+
+<form action="<?php echo $this->action; ?>" method="post" enctype="application/x-www-form-urlencoded"
+    class="tl_form ccc_settings">
+<input type="hidden" name="REQUEST_TOKEN" value="<?php echo REQUEST_TOKEN; ?>" />
+<input type="hidden" name="FORM_SUBMIT" value="<?php echo $this->formSubmit; ?>" />
+
+<div class="tl_formbody_edit">
+
+<?php if($this->explanation): ?>
+<p><?php echo $this->explanation; ?></p>
+<?php endif; ?>
+
+<fieldset class="tl_tbox">
+<?php foreach($this->widgets as $widget): ?>
+  <div class="<?php echo $widget->tl_class; ?>">
+    <?php echo $widget->parse(); ?>
+    <p class="tl_help tl_tip"><?php echo $widget->description; ?></p>
+  </div>
+<?php endforeach; ?>
+</fieldset>
+
+</div>
+
+<div class="tl_formbody_submit">
+  <div class="tl_submit_container">
+    <input type="submit" name="do" accesskey="s"
+        value="<?php echo $this->submitLabel; ?>"
+        class="tl_submit" />
+  </div>
+</div>
+
+</form>

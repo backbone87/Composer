@@ -1,0 +1,12 @@
+@CHARSET "UTF-8";
+
+.ccc_er2_to_composer p {
+	line-height: 1.5em;
+}
+.ccc_er2_to_composer ul {
+	list-style-type: none;
+	padding-left: 0;
+}
+.ccc_er2_to_composer ul input {
+	vertical-align: sub;
+}

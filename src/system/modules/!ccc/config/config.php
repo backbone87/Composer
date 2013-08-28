@@ -1,0 +1,1 @@
+<?php CCCLauncher::launch();

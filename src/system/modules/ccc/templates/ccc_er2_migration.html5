@@ -1,0 +1,46 @@
+<?php
+$GLOBALS['TL_CSS'][] = 'system/modules/ccc/assets/css/er2_to_composer.css';
+?>
+<div id="tl_buttons"></div>
+
+<h2 class="sub_headline"><?php echo $GLOBALS['TL_LANG']['ccc_er2_to_composer']['headline']; ?></h2>
+
+<?php echo $this->getMessages(); ?>
+
+<form action="<?php echo $this->action; ?>" method="post" enctype="application/x-www-form-urlencoded"
+    class="tl_form ccc_er2_to_composer">
+<input type="hidden" name="REQUEST_TOKEN" value="<?php echo REQUEST_TOKEN; ?>" />
+<input type="hidden" name="FORM_SUBMIT" value="<?php echo $this->formSubmit; ?>" />
+
+<div class="tl_formbody_edit">
+
+<p><?php echo $GLOBALS['TL_LANG']['ccc_er2_to_composer']['description']; ?></p>
+<p><strong><?php echo $GLOBALS['TL_LANG']['ccc_er2_to_composer']['commerical']; ?></strong></p>
+
+<ul>
+<?php foreach($this->extensions as $extension): ?>
+<li><input type="checkbox" name="extensions[]" value="<?php echo specialchars($extension['er2Name']); ?>" checked="checked" /><?php
+echo sprintf($GLOBALS['TL_LANG']['ccc_er2_to_composer']['extension'],
+	$extension['er2Name'],
+	$extension['er2Version'],
+	$extension['er2Build'],
+	$extension['composerName'],
+	$extension['composerConstraint']
+);
+?></li>
+<?php endforeach; ?>
+</ul>
+
+<p><em><?php echo $GLOBALS['TL_LANG']['ccc_er2_to_composer']['constraints']; ?></em></p>
+
+</div>
+
+<div class="tl_formbody_submit">
+  <div class="tl_submit_container">
+    <input type="submit" name="do" accesskey="s"
+        value="<?php echo $GLOBALS['TL_LANG']['ccc_er2_to_composer']['next']; ?>"
+        class="tl_submit" />
+  </div>
+</div>
+
+</form>

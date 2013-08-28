@@ -82,9 +82,4 @@ $GLOBALS['TL_LANG']['ccc_check']['check_fail']
 developers to resolve outstanding incompatibilities.';
 
 $GLOBALS['TL_LANG']['ccc_check']['check_next']
-	= 'Next';
-
-
-
-
-
+	= 'Continue';
